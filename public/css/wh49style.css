@@ -1,0 +1,207 @@
+:root{
+	--calender-font-color: rgba( 200, 200, 200, 1);
+	--calender-current-day: rgba( 100, 100, 200, 1);
+}
+
+.body{
+	min-height: 100%;
+	height: auto;
+
+	background-color:black;
+}
+
+.message-container{
+	min-height:2em;
+	width:100%;
+
+	padding:3px;
+}
+
+.text-input-label{
+	width: 80px;
+}
+
+.justify{
+	display: flex;
+	justify-content:space-between;
+	width:100%;
+}
+
+.justify div{
+	display:flex;
+}
+.right-justify{
+	display:flex;
+	justify-content:flex-end;
+}
+
+.center-justify{
+	display:flex;
+	justify-content:center;
+}
+.center-align{
+	display: flex;
+	align-items: center;
+}
+.space-between{
+	display:flex;
+	justify-content:space-between;
+}
+
+.shrink{
+	font-size:.6em;
+}
+
+.align-items-top{
+	display:flex;
+	align-items: top;
+}
+
+.standard-text-area{
+	width:90%;
+	height:300px;
+	padding:2px;
+}
+
+.center-align-page{
+	min-height: calc(80vh - 8.25rem);
+	display: flex;
+	align-items: center;
+	flex: 0 1 auto;
+}
+
+.hide-scroll{
+	overflow:hidden;
+}
+
+.big-text-button{
+	font-size:2.0em;
+	font-weight:800;
+
+	display: inline-flex;
+	align-items: center;
+}
+
+.page-container{
+	min-height:90%;
+
+	background-image:url("../images/About.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color:black;
+}
+
+fieldset{
+	background-color: black;
+	margin:15px;
+}
+
+.fixed-width-button{
+	width: 120px;
+}
+
+.wide-button{
+	width:90%;
+	width:90%;
+
+	overflow:hidden;
+}
+
+.team-buttons{
+	width:60%;
+}
+
+.big-mark{
+	font-size:1.5em;
+	font-weight: bolder;
+}
+
+.stupid-fucking-absolute-position-hack{
+	position:absolute;
+	line-height:60px;
+	font-size:1.5em;
+}
+/* Calender */
+
+.calender-day{
+	float:left;
+	border: 1px solid var(--calender-font-color);;
+
+	padding:2px;
+	margin: 2px;
+	display:flex;
+	flex: 7;
+
+	background-color:black;
+	height: 125px;
+}
+
+.calender-day-name{
+	float:left;
+
+	font-weight:bolder;
+	font-size:1.2em;
+
+	padding:2px;
+	margin: 2px;
+
+	border-left: 1px solid var(--calender-font-color);
+	border-right: 1px solid var(--calender-font-color);;
+
+	display:flex;
+	flex: 7;
+
+	align-items: center;
+	text-align:center;
+}
+
+.current-day{
+	border: 1px solid var(--calender-current-day);
+}
+
+.page-spacer{
+	min-height:20px;
+}
+
+/* Card based Events */
+
+.description-card{
+	min-height: 200px;
+	max-height: 200px;
+
+	padding: var(--universal-padding);
+
+	font-size:.8em;
+}
+
+.header-card{
+	min-height: 100px;
+	max-height: 100px;
+	padding: var(--universal-padding);
+}
+
+.social-media-box{
+	background-color: #666666;
+	border-radius: 15px 0px 15px 0px;
+}
+
+
+/* Font, Icons and text */
+
+.little-text{
+	font-size: .5em;
+}
+
+
+.small-icon-container{
+	text-align:right;
+	width:100%;
+}
+
+.small-icon-container button{
+	transform: scale(0.8);
+	border-radius:5px;
+
+	padding: 5px;
+	margin: 0px;
+}
