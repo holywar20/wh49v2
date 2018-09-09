@@ -74,6 +74,28 @@ class Authentication extends Controller
 		}
 	}
 
+	private function verifyPassword($password, $id){
+
+        $errors = array();
+
+        $user = Users::find($id);
+
+        if( $user ) {
+            if( !password_verify( $user->salt.$password , $user->password ) ) {
+                $errors['userpass'] = self::INVALID_USERPASS_ERROR;
+            }
+        }  else {
+            $errors['userpass'] = self::INVALID_USERPASS_ERROR;
+        }
+
+        if( count($errors )>= 1 ){
+            return  $errors;
+        } else {
+
+            return true;
+        }
+    }
+
 	public function getUserData( $id ){
 		$user = Users::find($id);
 		return $user;
@@ -166,6 +188,43 @@ class Authentication extends Controller
 
 		return parent::sendMessages( $messages );
 	}
+
+	public function updatePassword($id){
+        $allData = $this->request->all();
+        $messages = array();
+        $verifyResult = $this->verifyPassword($allData['current'], $id);
+
+        if($verifyResult === true) {
+
+            $validator = Validator::make($allData, [
+                'new' => self::VALIDATION_PASSWORD
+            ]);
+
+            if ($validator->fails()) {
+                return parent::sendMessages($validator->errors());
+            }
+
+            $myUser = Users::find($id);
+            Log::debug($myUser);
+            Log::debug(get_class($myUser));
+
+
+            if ($myUser) {
+                $myUser->password = $this->encrypt($myUser->salt . $allData['new']);
+                $myUser->save();
+                $messages['password'][] = self::MESSAGE_UPDATE_PASSWORD_SUCCESS;
+
+            } else {
+                $messages['password'][] = self::MESSAGE_UPDATE_BADID;
+            }
+        }
+        else
+        {
+            $messages = $verifyResult;
+        }
+        Log::debug($allData);
+    return parent::sendMessages( $messages );
+    }
 
 	public function newInvitedAccount(){
 

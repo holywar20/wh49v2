@@ -42,8 +42,12 @@ let profileTemplate = `
 				<input type="password" v-model="password_form.verify">
 			</div>
 			
+			<div class="message-container" v-for="message_array in messages.password_form">
+				<mark v-for="message in message_array">{{ message }}</mark>
+			</div>
+			
 			<div class="center-justify">
-				<button class="wide-button secondary">Save Password</button>
+				<button v-on:click="sendPassword" class="wide-button secondary">Save Password</button>
 			</div>
 		</fieldset>
 	</div>
@@ -138,7 +142,17 @@ let profilePage = {
 				}
 			});
 		},
-		sendPassword 	: () => {
+		sendPassword 	: function()  {
+			let self = this;
+
+			VmDataSender.auth.updatePassword( this.password_form , STATE.getID() )
+				.then( function( data ){
+                    if( data.messages ){
+                        self.messages.password_form = data.messages;
+                    } else {
+                        self.messages.password_form = [];
+                    }
+			});
 			console.log("Method doesn't exist yet!");
 		},
 		sendProfile		: function(){
