@@ -1,42 +1,63 @@
-Create a fresh deployment
+Deployment and Application information
 
 Install Xammp(Dev), LAMP( production ) and Git-Bash
 PHPStorm is recommended for developers, it has great git integration. Atom is a good free option though not as fully featured.
 
 All CLI should be done with git-bash, not with windows command line, as I haven't tested it, and it's known to be wonky.
 
-1. git clone https://github.com/holywar20/wh49v2
+1. Intial Setup
+	CLI - git clone https://github.com/holywar20/wh49v2
 	Install composer at get `https://getcomposer.org/`
-	`composer install --no-dev -optimize-autoloader`
+	CLI - composer install --no-dev -optimize-autoloader
 	test 'php artisan' on CLI
 2. Set up hosting path in xaamp
-	--
-	-- Create Database -
+	-- Create a database --
 
 3. Set up .env file
 	Copy .env.example
 	name file '.env'
-	Add all the config stuff you care about
+	Set any and all database credentialling
 	cli - php artisan:key generate
-	Copy that value, and place it in the .env file under 'APP_KEY'
+	NOTE : this key should now exist under APP_KEY in the .env file. Set it manually if it's not there.
+	Generate any cryptographically secure key and set the value to JWT_TOKEN_KEY
 
-4. Goto path\app\providers\JWT.php and modify the key there for that deployment.
-	I'm going to move this key to another place ( Maybe .env? ).
-	For now simply never push JWT.php, that file shouldn't need to change. Otherwise your publishing your key to github!
+4. Build the database
+	CLI - php artisan:migrate fresh
+	Verify the database exists, and that it has tables.
 
 5. Make a new user and test the App!
 
-
 Communication flow
 1. Vue Template
+	- HTML Templates that are saved as javascript strings
 2. Vue Object
-3. VmDataSend.dataCallName
+	- Example for 1 & 2 exist in public/maincomponents/template.js
+	- Note Data and Methods. These are direct bindings to the template.
+3. VmDataSend.{callgroup}.{dataCallName}
+	- VmDataSend is a global global that sends all API requests out.
+	- You can find it at public/singletons/datasender.js
+	- Make a new entry here for every request you might want to do, but it's safe to reuse requests if it makes sense to do so.
+	- never write a raw url, or database call. rely on VmDataSend to stitch that together for you.
 4. Laravel Routes file ( routes/api )
+	- Note that you wrap routes in 'middleware'.
+	- Middleware is a layer that the request must pass through before your Route gets activated.
 5. Laravel Controller
-6. VmDataSend gets promied data from web
+	- All routes point directly to a controller
+	- found in app/Http/Controllers
+	- Controller methods should always return the raw data that you want the distant end to get.
+6. Laravel Model
+	- stored in the app directory
+	- ALL DATABASE INTERACTIONS must be done through a model.
+	- The model provides security.
+	- The parent model class provides 99% of the functionality. The subclass you create is just for configuration
+6. VmDataSend gets promised data from web
+	- VmDataSend receives data from Model.
+	- VmDataSend does error handling, fires any events, ect.
+	- VmDataSend resolves the promise to the requesting Vue Object
 7. Vue Object is notified
-8. Something happens in Vue Object
-8. Vue automatically updates template for any bound object
+	- Inside the VmDataSend call, simply modify this.{propertyname} to update anything you want to update.
 
+Pushing a new Branch
 
+1. Make sure you have a github account.
 
