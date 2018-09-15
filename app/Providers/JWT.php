@@ -16,11 +16,12 @@ class JWT{
 		Users::ACCESS_USER, Users::ACCESS_ADMIN
 	);
 
-	private $myKey = "b2HywMdHeSSDYoEwNGbKGqVEUnRrn7kl";
+	private $myKey = "10";
 	private $token = null;
 
 	public function __construct( $tokenString = null ){
 		$this->token = $tokenString;
+		//$this->myKey = env('JWT_TOKEN_KEY' , false); // Key is stored in .env on the root.
 	}
 
 	public function makeNewKey(){

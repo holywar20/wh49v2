@@ -1,0 +1,42 @@
+Create a fresh deployment
+
+Install Xammp(Dev), LAMP( production ) and Git-Bash
+PHPStorm is recommended for developers, it has great git integration. Atom is a good free option though not as fully featured.
+
+All CLI should be done with git-bash, not with windows command line, as I haven't tested it, and it's known to be wonky.
+
+1. git clone https://github.com/holywar20/wh49v2
+	Install composer at get `https://getcomposer.org/`
+	`composer install --no-dev -optimize-autoloader`
+	test 'php artisan' on CLI
+2. Set up hosting path in xaamp
+	--
+	-- Create Database -
+
+3. Set up .env file
+	Copy .env.example
+	name file '.env'
+	Add all the config stuff you care about
+	cli - php artisan:key generate
+	Copy that value, and place it in the .env file under 'APP_KEY'
+
+4. Goto path\app\providers\JWT.php and modify the key there for that deployment.
+	I'm going to move this key to another place ( Maybe .env? ).
+	For now simply never push JWT.php, that file shouldn't need to change. Otherwise your publishing your key to github!
+
+5. Make a new user and test the App!
+
+
+Communication flow
+1. Vue Template
+2. Vue Object
+3. VmDataSend.dataCallName
+4. Laravel Routes file ( routes/api )
+5. Laravel Controller
+6. VmDataSend gets promied data from web
+7. Vue Object is notified
+8. Something happens in Vue Object
+8. Vue automatically updates template for any bound object
+
+
+
