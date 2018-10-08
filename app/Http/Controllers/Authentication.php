@@ -62,7 +62,7 @@ class Authentication extends Controller
 		}
 
 		if( count($errors )>= 1 ){
-			return parent::sendErrors( $errors );
+			return parent::sendMessages( $errors );
 		} else {
 			$token = $this->JWT->create( $user->id );
 
