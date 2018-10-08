@@ -1,6 +1,45 @@
 let eventsPageTemplate = `
 <div class="container">
+<div v-if="showEventModal" class="modal">
+	<fieldset>
+		<legend class="logo-legend">
+			<img src="images/Sticker-Small.png">
+			<span>Event Data</span>
+		</legend>
+	
+		<div class="input-group fluid">
+			<label class="basic" for="eventname">Event Name</label>
+			<input type="text" id="name" placeholder="Event Name"/>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic" for="image">Event Image</label>
+			<input type="text" id="image" placeholder="EventImage.jpg"/>
+			<button>Browse</button>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic" for="facebook">Facebook Link</label>
+			<input type="text" id="facebook" placeholder="facebook"/>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic" for="time">Date and Time</label>
+			<input type="text" id="time" placeholder="Date and time"/>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic" for="description">Description</label>
+			<textarea id="Username" placeholder="A compelling description of this event!">
+			
+			</textarea>
+		</div>
+	</fieldset>
+</div>
+
+
 <div class="page-specific-controls row center-align">
+
 	<div class="page-spacer col-sm-12"></div>
 
 	<div class="col-sm col-md col-lg-1"></div> 
@@ -29,20 +68,14 @@ let eventsPageTemplate = `
 				</button>
 			</div>
 			
-			<div v-if="userAccess=='admin'">
+			<div v-if="userAccess=='Admin'">
 				<button v-on:click="callEventModal" class="primary">Add New Event</button>
 			</div>
 			
 			<div v-if="">
 				
 			</div>
-		</div>
-		
-	</div>
-	
-	<div v-if="">
-		<div>
-		
+			</div>
 		</div>
 	</div>
 	
@@ -162,51 +195,13 @@ let userEventsPageObject = {
 	created: function () {
 
 		this.userAccess = STATE.getACCESS();
+		console.log(this.userAccess);
+		let thisYear			= Moment().get('year');
 
-
-		// TODO - get current event data
-		this.eventData = [
-			{
-				'name': 'test event',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm",
-				'links' : {
-					'facebook' : 'www.facebook.com',
-					'twitter'  : 'www.twitter.com',
-				},
-				'id' : 1
-			},
-			{
-				'name': 'test event 2',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-			{
-				'name': 'test event 3',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-			{
-				'name': 'test event 3',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-			{
-				'name': 'test event 3',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-		]
+		VmDataSender.events.getEventsByYear( thisYear )
+		.then( function( data ){
+			console.log( data );
+		})
 	},
 	methods: {
 		changeViewType: function () {
@@ -237,7 +232,7 @@ let userEventsPageObject = {
 			console.log("editing an already existing event")
 		}
 	}
-}// End of Vue component
+}; // End of Vue component
 
 Vue.component('wheventspage', userEventsPageObject);
 

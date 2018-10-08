@@ -205,3 +205,13 @@ fieldset{
 	padding: 5px;
 	margin: 0px;
 }
+
+
+.modal{
+	position: absolute;
+	width: 600px;
+}
+
+label.basic{
+	width: 80px;
+}

@@ -12,6 +12,14 @@ class EventsController extends Controller
 		$this->request = $request;
 	}
 
+	public function getEvents( $month, $year ){
+
+		return array(
+			'startTest' 	=> $month,
+			'endTest'		=> $year
+		);
+	}
+
 	public function newEvent(){
 		return $this->request->all();
 	}
