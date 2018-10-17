@@ -40,6 +40,7 @@
 	<script src="maincomponents/whprofilepage.js"></script>
 	<script src="maincomponents/whteams.js"></script>
 
+	<script src="https://unpkg.com/vuejs-datepicker"></script>
 	<!-- Needs admin access -->
 
 </head>

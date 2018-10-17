@@ -19,6 +19,8 @@ Moment.locale();
 let STATE = null;
 window.onload = function(){
 
+Vue.component('datepicker' , vuejsDatepicker);
+
 STATE = new Vue({
 	el : '#main-container',
 	data : function() {
