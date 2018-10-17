@@ -208,8 +208,14 @@ fieldset{
 
 
 .modal{
-	position: absolute;
 	width: 600px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.modal-container{
+	position: absolute;
+	width:100%;
 }
 
 label.basic{

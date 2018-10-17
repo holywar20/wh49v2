@@ -1,6 +1,8 @@
 let eventsPageTemplate = `
 <div class="container">
-<div v-if="showEventModal" class="modal">
+
+<div v-if="showEventModal" class="modal-container">
+<div class="modal">
 	<fieldset>
 		<legend class="logo-legend">
 			<img src="images/Sticker-Small.png">
@@ -36,6 +38,7 @@ let eventsPageTemplate = `
 		</div>
 	</fieldset>
 </div>
+</div> <!-- End of Modal Container -->
 
 
 <div class="page-specific-controls row center-align">

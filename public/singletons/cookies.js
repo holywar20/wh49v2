@@ -17,13 +17,11 @@ var GlobalCookies = function(){
 
 		var nameEQ = name + "=";
 		var ca = document.cookie.split(';');
-
+		// TODO : There is a bug here, not all cookies will have a leading ' ' space, which means sometimes the token doesn't get read properly.
 		for(var i=0;i < ca.length;i++) {
 			var c = ca[i];
-			console.log(c);
-			while ( c.charAt(0)==' ' || i === 0 ) {
+			while ( c.charAt(0)==' ' ) {
 				c = c.substring(1,c.length);
-				console.log(c);
 				if ( c.indexOf(nameEQ) == 0 )
 				{
 					console.log(nameEQ);
