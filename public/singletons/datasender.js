@@ -56,6 +56,20 @@ var GlobalGenerateDataSender = function( baseUrl ){
 
 	};
 
+	this.events = {};
+	this.events.getEventsByMonth = function( month , year){
+		let urlFragment = "events/getEventsByMonth/" + year + "/" + month;
+		data = {};
+
+		return postData( data, urlFragment );
+	}
+	this.events.getEventsByYear = function( year ){
+		let urlFragment = "events/getEventsByMonth/" + year;
+		data = {};
+
+		return postData( data, urlFragment );
+	}
+
 	var postData = function(data, urlFragment, event = null ,  needsToken = ADD_TOKEN ){
 
 		var myUrl = baseUrl + urlFragment;

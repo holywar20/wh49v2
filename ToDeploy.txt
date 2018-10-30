@@ -1,29 +1,36 @@
 Deployment and Application information
 
-Install Xammp(Dev), LAMP( production ) and Git-Bash
+Install Xammp(Dev), LAMP( Linux production ) , Wamp( Windows production ) and Git-Bash
 PHPStorm is recommended for developers, it has great git integration. Atom is a good free option though not as fully featured.
 
 All CLI should be done with git-bash, not with windows command line, as I haven't tested it, and it's known to be wonky.
 
 1. Intial Setup
 	CLI - git clone https://github.com/holywar20/wh49v2
+	Do this in the root directy ( normally www ) that you wish to be bound to the web
 	Install composer at get `https://getcomposer.org/`
-	CLI - composer install --no-dev -optimize-autoloader
+	CLI - 'composer install' in the folder with the composer.json file
 	test 'php artisan' on CLI
-2. Set up hosting path in xaamp
-	-- Create a database --
+2. Set up hosting path in xaamp/wamp
+	You may not need to set anything up local host , depending on how you installed.
+	navigate to install directory for app.
 
 3. Set up .env file
-	Copy .env.example
+	Copy the file named .env.example
 	name file '.env'
 	Set any and all database credentialling
-	cli - php artisan:key generate
+	CLI - `php artisan:key generate`
 	NOTE : this key should now exist under APP_KEY in the .env file. Set it manually if it's not there.
 	Generate any cryptographically secure key and set the value to JWT_TOKEN_KEY
+	Navigate to the landing page ( in public ) to be sure the all works
 
 4. Build the database
 	CLI - php artisan:migrate fresh
 	Verify the database exists, and that it has tables.
+
+5. Finish up
+	Modify public/singletons/config.js - change URL to point to 'path/public/api' as perceived by an outside user.
+	Change boxset to Be either "DEV" or "PROD" depending on your enviroment
 
 5. Make a new user and test the App!
 
@@ -41,6 +48,8 @@ Communication flow
 4. Laravel Routes file ( routes/api )
 	- Note that you wrap routes in 'middleware'.
 	- Middleware is a layer that the request must pass through before your Route gets activated.
+	- It is also possible to add middleware on an outgoing request.
+	- JWT is done using middleware. Any request requiring authentication will validate the token, and if token is bad, it returns false, and doesn't process the reqest.
 5. Laravel Controller
 	- All routes point directly to a controller
 	- found in app/Http/Controllers
@@ -48,16 +57,19 @@ Communication flow
 6. Laravel Model
 	- stored in the app directory
 	- ALL DATABASE INTERACTIONS must be done through a model.
-	- The model provides security.
-	- The parent model class provides 99% of the functionality. The subclass you create is just for configuration
+	- The model automatically provides security.
+	- The parent model class provides 99% of the functionality. The subclass you create is just for configuration.
+	- However you can add methods specific to a model if you need it.
 6. VmDataSend gets promised data from web
-	- VmDataSend receives data from Model.
+	- VmDataSend receives data from Web
 	- VmDataSend does error handling, fires any events, ect.
 	- VmDataSend resolves the promise to the requesting Vue Object
 7. Vue Object is notified
-	- Inside the VmDataSend call, simply modify this.{propertyname} to update anything you want to update.
+	- Inside the VmDataSend call, simply modify this.{propertyname} or self.{propertyname} to update anything you want to update.
+	- No Jquery or view modification should be nessecery. All of that is handled by the view itself.
 
-Pushing a new Branch
+Pushing a new Branch ( should only be done from dev )
 
 1. Make sure you have a github account.
+2. CLI in the root of the application that matches the repo on github
 

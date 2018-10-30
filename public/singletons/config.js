@@ -3,7 +3,7 @@ let GLOBALCONFIG = function(){
 	this.BOXSET = "DEV";
 
 	this.DEBUGMODE = false;
-	this.BASEURL = "http://laravel.localdev/wh48/public/api/";
+	this.BASEURL = "/wh49v2/public/api/";
 
 	return this;
 };

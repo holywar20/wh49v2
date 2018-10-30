@@ -1,11 +1,75 @@
 let eventsPageTemplate = `
 <div class="container">
+
+<div v-if="showEventModal" class="modal-container">
+<div class="modal">
+	<fieldset>
+		<legend class="logo-legend">
+			<img src="images/Sticker-Small.png">
+			<span class="legend-alignment">Event Data</span>
+		</legend>
+		
+		<div class="row">
+			<div class="col-sm-11"></div>
+			<div class="col-sm-1">
+				<button v-on:click="closeEventModal" class="secondary icono icono-crossCircle close-button"></button>
+			</div>
+		</div>
+	
+		<div class="input-group fluid">
+			<label class="basic-big" for="eventname">Event Name</label>
+			<input type="text" id="name" placeholder="Event Name"/>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic-big" for="image">Event Image</label>
+			<input type="text" id="image" placeholder="EventImage.jpg"/>
+			<button>Browse</button>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic-big" for="facebook">Facebook Link</label>
+			<input type="text" id="facebook" placeholder="Facebook.com/urlname"/>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic-big" for="time">Date and Time</label>
+			<datepicker></datepicker>
+			<input min="1" max="12" class="small" type="number">
+			<b>:</b>
+			<input min="0" max="59" class="small" type="number">
+			<select class="small">
+				<option value="AM">AM</option>
+				<option value="PM">PM</option>
+			</select>
+		</div>
+		
+		<div class="input-group fluid">
+			<label class="basic-big" for="description">Description</label>
+			<textarea class="wide-text-area" id="Username" placeholder="A compelling description of this event!">
+			
+			</textarea>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<button class="secondary">Delete</button>
+				<button class="primary">Save Event</button>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+	</fieldset>
+</div>
+</div> <!-- End of Modal Container -->
+
 <div class="page-specific-controls row center-align">
+
 	<div class="page-spacer col-sm-12"></div>
 
 	<div class="col-sm col-md col-lg-1"></div> 
 	
-	<div v-if=" viewType == 'calender' " class="calender-buttons center-align col-sm-12 col-md-12 col-lg-10">
+	<div v-if="viewType == 'calender'" class="calender-buttons center-align col-sm-12 col-md-12 col-lg-10">
 		<div class="justify">
 			<div>
 				<button v-on:click="changeViewType" class="primary">
@@ -19,7 +83,7 @@ let eventsPageTemplate = `
 				<button class="primary"><i class="icono-forward"></i></button>
 			</div>
 		</div>
-	</div>
+	</div> <!-- end of show calender -->
 	
 	<div v-if="viewType == 'list'" class="center-align col-sm-12 col-md-12 col-lg-10">
 		<div class="justify">
@@ -29,7 +93,7 @@ let eventsPageTemplate = `
 				</button>
 			</div>
 			
-			<div v-if="userAccess=='admin'">
+			<div v-if="userAccess=='Admin'">
 				<button v-on:click="callEventModal" class="primary">Add New Event</button>
 			</div>
 			
@@ -37,17 +101,10 @@ let eventsPageTemplate = `
 				
 			</div>
 		</div>
-		
-	</div>
-	
-	<div v-if="">
-		<div>
-		
-		</div>
-	</div>
+	</div><!-- end of show list selector -->
 	
 	<div class="col-sm col-md col-lg-1"></div> 
-</div>
+</div><!-- End of page controls -->
 	
 <div class="row">
 	<div class="col-sm col-md col-lg-1"></div> <!-- Spacer -->
@@ -100,46 +157,6 @@ let eventsPageTemplate = `
 			<div class="calender-day">6</div>
 			<div class="calender-day">7</div>
 		</div>
-		
-		<div class="calender-week row">
-			<div class="calender-day">1</div>
-			<div class="calender-day">2</div>
-			<div class="calender-day">3</div>
-			<div class="calender-day">4</div>
-			<div class="calender-day">5</div>
-			<div class="calender-day">6</div>
-			<div class="calender-day">7</div>
-		</div>
-		
-		<div class="calender-week row">
-			<div class="calender-day">1</div>
-			<div class="calender-day">2</div>
-			<div class="calender-day">3</div>
-			<div class="calender-day">4</div>
-			<div class="calender-day">5</div>
-			<div class="calender-day">6</div>
-			<div class="calender-day">7</div>
-		</div>
-		
-		<div class="calender-week row">
-			<div class="calender-day">1</div>
-			<div class="calender-day">2</div>
-			<div class="calender-day">3</div>
-			<div class="calender-day">4</div>
-			<div class="calender-day">5</div>
-			<div class="calender-day">6</div>
-			<div class="calender-day">7</div>
-		</div>
-		
-		<div class="calender-week row">
-			<div class="calender-day">1</div>
-			<div class="calender-day">2</div>
-			<div class="calender-day">3</div>
-			<div class="calender-day">4</div>
-			<div class="calender-day">5</div>
-			<div class="calender-day">6</div>
-			<div class="calender-day">7</div>
-		</div>
 	</div>
 	
 	<div class="col-sm col-md col-lg-1"></div> 
@@ -155,58 +172,20 @@ let userEventsPageObject = {
 			eventData		: 	[],
 			calenderMonth	:	[],
 			showEventModal 	: 	0,
-
+			showPicker		:	0,
 			userAccess : null
 		}
 	},
 	created: function () {
 
 		this.userAccess = STATE.getACCESS();
+		console.log(this.userAccess);
+		let thisYear			= Moment().get('year');
 
-
-		// TODO - get current event data
-		this.eventData = [
-			{
-				'name': 'test event',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm",
-				'links' : {
-					'facebook' : 'www.facebook.com',
-					'twitter'  : 'www.twitter.com',
-				},
-				'id' : 1
-			},
-			{
-				'name': 'test event 2',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-			{
-				'name': 'test event 3',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-			{
-				'name': 'test event 3',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-			{
-				'name': 'test event 3',
-				'description': 'bunch of description for the event',
-				'starttime': 1527987810,
-				'endtime': 1527987810,
-				'timedisplay': "June 11th, 2018, 7pm-9pm"
-			},
-		]
+		VmDataSender.events.getEventsByYear( thisYear )
+		.then( function( data ){
+			console.log( data );
+		})
 	},
 	methods: {
 		changeViewType: function () {
@@ -229,6 +208,7 @@ let userEventsPageObject = {
 		},
 		closeEventModal: function() {
 			this.showEventModal = 0;
+			this.showPicker		= 0;
 		},
 		deleteEvent : function( eventKey ){
 			console.log("deleting an event");
@@ -237,7 +217,8 @@ let userEventsPageObject = {
 			console.log("editing an already existing event")
 		}
 	}
-}// End of Vue component
+}; // End of Vue component
 
 Vue.component('wheventspage', userEventsPageObject);
+
 

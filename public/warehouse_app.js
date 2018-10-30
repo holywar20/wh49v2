@@ -19,6 +19,8 @@ Moment.locale();
 let STATE = null;
 window.onload = function(){
 
+Vue.component('datepicker' , vuejsDatepicker);
+
 STATE = new Vue({
 	el : '#main-container',
 	data : function() {
@@ -85,9 +87,9 @@ STATE = new Vue({
 	};
 
 	STATE.onLogout = function(){
-		STATE.access = null;
-		STATE.ID = null;
-		STATE.token = null;
+		STATE.access 	= null;
+		STATE.ID 		= null;
+		STATE.token 	= null;
 
 		Cookies.eraseCookie('token');
 		Cookies.eraseCookie('access');
@@ -98,9 +100,13 @@ STATE = new Vue({
 
 	STATE.checkForLogin = function(){
 
+		console.log('checking!');
+
 		let token 	= Cookies.readCookie('token');
 		let access	= Cookies.readCookie('access');
 		let id		= Cookies.readCookie('id');
+
+		console.log( token );
 
 		if( token && access && id ){
 			STATE.loginUser( token , access, id );

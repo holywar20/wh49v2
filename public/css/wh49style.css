@@ -192,11 +192,17 @@ fieldset{
 	font-size: .5em;
 }
 
+.legend-alignment{
+	padding-left:20px;
+	font-size:1.5em;
+}
 
 .small-icon-container{
 	text-align:right;
 	width:100%;
 }
+
+
 
 .small-icon-container button{
 	transform: scale(0.8);
@@ -204,4 +210,54 @@ fieldset{
 
 	padding: 5px;
 	margin: 0px;
+}
+
+
+.modal{
+	width: 600px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.modal-container{
+	position: absolute;
+	width:100%;
+}
+
+label.basic{
+	width: 80px;
+}
+
+label.basic-big{
+	width:160px;
+}
+
+button.close-button{
+	top:-25px;
+}
+
+textarea.wide-text-area{
+	width: 95%;
+	height:200px;
+}
+
+.icono:hover{
+	color: purple;
+}
+
+.icono:active{
+	color: black;
+}
+
+input.small{
+	max-width:30px;
+}
+
+/* component overrides */
+div.vdp-datepicker__calendar{
+	background-color:black;
+}
+
+div.day-header{
+	color:darkred;
 }
